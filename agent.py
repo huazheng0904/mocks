@@ -58,9 +58,21 @@ def run_agent(user_message: str, model: FakeModel) -> str:
     response = model.complete(messages)
 
     if response.tool_calls:
-        tool_call = response.tool_calls[0]
-        result = TOOLS[tool_call.name](tool_call.arguments)
-        messages.append({"role": "tool", "content": str(result)})
+        for tool_call in response.tool_calls:
+            if tool_call.name not in TOOLS:
+                result: dict[str, Any] = {"error": f"unknown tool: {tool_call.name}"}
+            else:
+                try:
+                    kwargs = json.loads(tool_call.arguments)
+                except json.JSONDecodeError:
+                    result = {"error": "invalid JSON in tool arguments"}
+                else:
+                    result = TOOLS[tool_call.name](**kwargs)
+            messages.append({
+                "role": "tool",
+                "tool_call_id": tool_call.id,
+                "content": json.dumps(result),
+            })
         response = model.complete(messages)
 
     return response.content or ""
