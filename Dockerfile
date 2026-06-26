@@ -9,6 +9,7 @@ COPY pyproject.toml README.md ./
 COPY agent.py test_agent.py ./
 COPY app ./app
 COPY data ./data
+COPY evals ./evals
 COPY tests ./tests
 
 RUN pip install --no-cache-dir -e ".[dev]"

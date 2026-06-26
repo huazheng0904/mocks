@@ -1,10 +1,23 @@
 from fastapi.testclient import TestClient
 
+from app.agents.finance_agent import FinanceAgentService
+from app.api.routes import get_agent_service
+from app.config import Settings
 from app.main import create_app
+from app.services.context_store import JsonFinanceContextStore
+
+
+def create_test_client() -> TestClient:
+    app = create_app()
+    app.dependency_overrides[get_agent_service] = lambda: FinanceAgentService(
+        store=JsonFinanceContextStore(),
+        settings=Settings(agent_mode="deterministic", openai_api_key=None),
+    )
+    return TestClient(app)
 
 
 def test_health_endpoint():
-    client = TestClient(create_app())
+    client = create_test_client()
 
     response = client.get("/health")
 
@@ -16,7 +29,7 @@ def test_health_endpoint():
 
 
 def test_review_transaction_endpoint_escalates_missing_acceptance():
-    client = TestClient(create_app())
+    client = create_test_client()
 
     response = client.post(
         "/agent/review-transaction",

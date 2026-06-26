@@ -48,6 +48,30 @@ python -m unittest -v
 python -m pytest -q
 ```
 
+## Run Evals
+
+Evals exercise agent behavior against finance scenarios. The default eval suite
+runs in deterministic mode so it is stable in CI and local development.
+
+```bash
+python -m evals.run_evals
+```
+
+Expected output:
+
+```text
+3/3 evals passed
+txn_1007_missing_acceptance: PASS score=1.00
+txn_1012_subscription_ready: PASS score=1.00
+missing_transaction_escalates: PASS score=1.00
+```
+
+Use JSON output for automation:
+
+```bash
+python -m evals.run_evals --json
+```
+
 ## Run API
 
 ```bash

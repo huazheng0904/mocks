@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from typing import Annotated
+
+from fastapi import APIRouter, Depends
 
 from app.agents.finance_agent import FinanceAgentService
 from app.api.schemas import (
@@ -11,8 +13,10 @@ from app.services.context_store import JsonFinanceContextStore
 
 
 router = APIRouter()
-store = JsonFinanceContextStore()
-agent_service = FinanceAgentService(store=store)
+
+
+def get_agent_service() -> FinanceAgentService:
+    return FinanceAgentService(store=JsonFinanceContextStore())
 
 
 @router.get("/health", response_model=HealthResponse)
@@ -21,10 +25,16 @@ def health() -> HealthResponse:
 
 
 @router.post("/agent/chat", response_model=AgentResponse)
-async def chat(request: ChatRequest) -> AgentResponse:
+async def chat(
+    request: ChatRequest,
+    agent_service: Annotated[FinanceAgentService, Depends(get_agent_service)],
+) -> AgentResponse:
     return await agent_service.chat(request)
 
 
 @router.post("/agent/review-transaction", response_model=AgentResponse)
-async def review_transaction(request: TransactionReviewRequest) -> AgentResponse:
+async def review_transaction(
+    request: TransactionReviewRequest,
+    agent_service: Annotated[FinanceAgentService, Depends(get_agent_service)],
+) -> AgentResponse:
     return await agent_service.review_transaction(request)
