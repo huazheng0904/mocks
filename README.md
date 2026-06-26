@@ -1,37 +1,89 @@
-# Mock Agentic Coding Exercise
+# Finance Agent Service
 
-This is a small practice repo for the Writer live agentic coding interview.
+This repo started as a mock tool-calling interview exercise and now includes a
+production-style foundation for an audit-ready finance agent backend.
 
-It simulates an AI chat agent that receives model tool calls, executes Python tools, sends tool results back, and returns a final answer. It does not require an OpenAI API key.
+The first production use case is transaction review: given a transaction ID, the
+service gathers synthetic ledger, contract, policy, audit evidence, and
+historical-decision context, then returns a structured review decision.
 
-## Run
+## Stack
+
+- FastAPI for the HTTP backend
+- Pydantic for API, domain, and tool schema validation
+- OpenAI Agents SDK for the live model-backed agent path
+- Synthetic JSON finance data for deterministic local development
+- Docker for local service startup
+
+## Local Setup
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+python -m pip install -e ".[dev]"
+copy .env.example .env
+```
+
+Set `OPENAI_API_KEY` in `.env` before enabling live OpenAI calls. The current
+foundation can run deterministic transaction reviews without an API key.
+
+Use deterministic mode for local tests:
+
+```text
+AGENT_MODE=deterministic
+```
+
+Use live OpenAI mode:
+
+```text
+AGENT_MODE=openai
+OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-4.1-mini
+```
+
+## Run Tests
 
 ```bash
 python -m unittest -v
+python -m pytest -q
 ```
 
-## Your Task
+## Run API
 
-The starting implementation in `agent.py` is intentionally incomplete.
+```bash
+uvicorn app.main:app --reload
+```
 
-Fix it so all tests pass:
+Then open:
 
-- Parse tool-call arguments from JSON.
-- Execute the requested tool.
-- Preserve the tool call ID in the returned tool message.
-- Send tool outputs back to the fake model.
-- Continue the loop until the model returns final text.
-- Handle multiple tool calls.
-- Return useful error payloads for unknown tools or bad JSON.
+```text
+http://localhost:8000/docs
+```
 
-Then add one new tool of your own and a test for it.
+## Run With Docker
 
-## Interview Practice Script
+```bash
+docker compose up --build
+```
 
-As you work, narrate:
+## Example Request
 
-- What you are inspecting.
-- What invariant the agent loop should maintain.
-- Which failure you reproduced.
-- Why your patch is narrow.
-- How you verified it.
+```bash
+curl -X POST http://localhost:8000/agent/review-transaction \
+  -H "Content-Type: application/json" \
+  -d "{\"transaction_id\":\"txn_1007\",\"company_id\":\"acme\"}"
+```
+
+Expected decision: `escalate`, because the transaction requires customer
+acceptance evidence and that evidence is missing.
+
+## Legacy Mock Exercise
+
+The original minimal interview exercise still lives in `agent.py` and
+`test_agent.py`. It demonstrates the lower-level tool-calling loop mechanics:
+
+- parse tool-call JSON arguments
+- execute requested tools
+- preserve tool call IDs
+- return JSON tool outputs
+- handle multiple tool calls and unknown tools

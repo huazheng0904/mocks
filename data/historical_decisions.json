@@ -1,0 +1,14 @@
+[
+  {
+    "decision_id": "dec_acme_prior_acceptance",
+    "entity_id": "cust_acme",
+    "outcome": "deferred_revenue",
+    "rationale": "A prior Acme implementation was deferred until signed acceptance was provided."
+  },
+  {
+    "decision_id": "dec_zenith_subscription",
+    "entity_id": "cust_zenith",
+    "outcome": "recognized_monthly",
+    "rationale": "Zenith subscription revenue was recognized monthly when invoice evidence was present."
+  }
+]

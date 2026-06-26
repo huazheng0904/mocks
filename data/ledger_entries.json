@@ -1,0 +1,22 @@
+[
+  {
+    "transaction_id": "txn_1007",
+    "company_id": "acme",
+    "customer_id": "cust_acme",
+    "contract_id": "ctr_acme_2026",
+    "amount": 125000.0,
+    "currency": "USD",
+    "transaction_date": "2026-06-24",
+    "requested_accounting_treatment": "recognize_revenue_current_month"
+  },
+  {
+    "transaction_id": "txn_1012",
+    "company_id": "acme",
+    "customer_id": "cust_zenith",
+    "contract_id": "ctr_zenith_2026",
+    "amount": 42000.0,
+    "currency": "USD",
+    "transaction_date": "2026-06-25",
+    "requested_accounting_treatment": "recognize_revenue_current_month"
+  }
+]

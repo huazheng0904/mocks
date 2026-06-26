@@ -1,0 +1,12 @@
+[
+  {
+    "policy_id": "revrec_enterprise_software",
+    "workflow": "revenue_recognition",
+    "rule": "Revenue may be recognized only when the performance obligation is satisfied and required customer acceptance evidence is available.",
+    "required_evidence": [
+      "signed_contract",
+      "invoice",
+      "customer_acceptance_when_required"
+    ]
+  }
+]

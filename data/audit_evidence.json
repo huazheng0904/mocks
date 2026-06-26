@@ -1,0 +1,30 @@
+[
+  {
+    "evidence_id": "ev_contract_acme_2026",
+    "entity_id": "ctr_acme_2026",
+    "evidence_type": "signed_contract",
+    "status": "available",
+    "detail": "Signed enterprise software agreement dated 2026-06-01."
+  },
+  {
+    "evidence_id": "ev_acceptance_acme_2026",
+    "entity_id": "ctr_acme_2026",
+    "evidence_type": "customer_acceptance",
+    "status": "missing",
+    "detail": "Customer acceptance certificate has not been attached."
+  },
+  {
+    "evidence_id": "ev_invoice_1007",
+    "entity_id": "txn_1007",
+    "evidence_type": "invoice",
+    "status": "available",
+    "detail": "Invoice INV-1007 issued for 125000.00 USD."
+  },
+  {
+    "evidence_id": "ev_invoice_1012",
+    "entity_id": "txn_1012",
+    "evidence_type": "invoice",
+    "status": "available",
+    "detail": "Invoice INV-1012 issued for 42000.00 USD."
+  }
+]

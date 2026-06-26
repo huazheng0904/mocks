@@ -1,0 +1,16 @@
+[
+  {
+    "contract_id": "ctr_acme_2026",
+    "customer_id": "cust_acme",
+    "performance_obligation": "Enterprise platform implementation and acceptance",
+    "acceptance_required": true,
+    "acceptance_evidence_id": "ev_acceptance_acme_2026"
+  },
+  {
+    "contract_id": "ctr_zenith_2026",
+    "customer_id": "cust_zenith",
+    "performance_obligation": "Monthly subscription access",
+    "acceptance_required": false,
+    "acceptance_evidence_id": null
+  }
+]
