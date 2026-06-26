@@ -84,6 +84,20 @@ Then open:
 http://localhost:8000/docs
 ```
 
+## Run Chat UI
+
+```bash
+cd frontend
+pnpm install
+pnpm dev
+```
+
+Then open:
+
+```text
+http://localhost:5173
+```
+
 ## Run With Docker
 
 ```bash
